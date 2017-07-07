@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Simple Tax Calculator</title>
+    <!-- Mobile Specific Metas
+	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- FONT
+	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <!-- CSS
+	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="Skeleton-2.0.4/css/normalize.css">
+    <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
+    <!-- Favicon
+	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="Skeleton-2.0.4/image/png" href="Skeleton-2.0.4/images/favicon.png">
+    <!-- React
+	  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        
+    </div>
+    © 2017 AnalytixWare Pty Ltd
+
+    <script type="text/babel">
+    	//calculate tax
+    	function income_tax(sal) {
+    		if (sal <= 18200) {
+    			return 0
+    		} else if (sal <= 37000) {
+    			return (sal - 18200)*0.19
+    		} else if (sal <= 87000) {
+    			return (sal - 37000)*0.325 + 3572
+    		} else if (sal <= 180000) {
+    			return (sal - 87000)*0.37 + 19822
+    		} else if (sal > 180000) {
+    			return (sal - 180000)*0.45 + 54232
+    		}
+    	}
+
+        class TaxCalculator extends React.Component {
+		  constructor(props) {
+		    super(props);
+		    this.handleSalaryChange = this.handleSalaryChange.bind(this);
+		    this.handleTaxChange = this.handleTaxChange.bind(this)
+		    this.state = {salary: props.salary, tax : income_tax(props.salary), medicareLevy:props.salary*0.025};
+		  }
+
+		  handleSalaryChange(e) {
+		    if (Number.isInteger(eval(e.target.value))) {
+		    	this.setState({
+		    	salary : e.target.value, 
+		    	tax: income_tax(eval(e.target.value)), medicareLevy : eval(e.target.value) * 0.025});
+		    	console.log("2")
+		    } else {
+		    	this.setState({salary: e.target.value})
+		    	console.log("3")
+		    }
+		  }
+
+		  handleTaxChange(e) {
+		  	console.log("wassup")
+		  	if (Number.isInteger(parseInt(e.target.value))) {
+		  		this.setState({salary : parseInt(e.target.value)/0.3, tax: parseInt(e.target.value), medicareLevy : this.state.salary * 0.025});
+		  	} else {
+		  		this.setState({tax: e.target.value});
+		  	}
+		  	
+		  }
+
+		  render() {
+		    const salary = this.state.salary;
+		    const tax = this.state.tax;
+		    const medicareLevy = this.state.medicareLevy;
+
+		    return (
+		      <div>
+		        <table class="u-full-width">
+		            <thead>
+		                <tr>
+		                    <th>Salary</th>
+		                    <th>Tax</th>
+		                    <th>Medicare levy</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <tr>
+		                   <td> <fieldset>
+						        <input value={salary}
+						               onChange={this.handleSalaryChange} />
+					      </fieldset> </td>
+		                   <td><fieldset>
+						       
+						        <input value={tax}
+						               onChange={this.handleTaxChange} />
+					      </fieldset></td>
+					      <td>{medicareLevy}</td>
+		        		</tr>
+		            </tbody>
+		        </table>
+		      </div>);
+  			}
+		}
+
+		ReactDOM.render(
+			<div>
+			<TaxCalculator salary = "80000" /> <TaxCalculator  salary = "70000"/>
+			</div>,
+  			document.getElementById('root')
+		);
+    </script>
+</body>
+
+</html>
