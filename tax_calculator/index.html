@@ -25,6 +25,7 @@
 </head>
 
 <body>
+	<h1>Australian Simple Tax Calculator</h1>
     <div id="root">
         
     </div>
@@ -82,31 +83,20 @@
 		    const medicareLevy = this.state.medicareLevy;
 
 		    return (
-		      <div>
-		        <table class="u-full-width">
-		            <thead>
-		                <tr>
-		                    <th>Salary</th>
-		                    <th>Tax</th>
-		                    <th>Medicare levy</th>
-		                </tr>
-		            </thead>
-		            <tbody>
-		                <tr>
-		                   <td> <fieldset>
-						        <input value={salary}
-						               onChange={this.handleSalaryChange} />
-					      </fieldset> </td>
-		                   <td><fieldset>
-						       
-						        <input value={tax}
-						               onChange={this.handleTaxChange} />
-					      </fieldset></td>
-					      <td>{medicareLevy}</td>
-		        		</tr>
-		            </tbody>
-		        </table>
-		      </div>);
+		     <div className = "container"> <div className="row">
+		     		      	<div className="five columns"><fieldset>
+		     		      	<legend>Salary</legend>
+		     						        <input value={salary}
+		     						               onChange={this.handleSalaryChange} />
+		     					      </fieldset></div>
+		     		      	<div className="five columns"><fieldset>
+		     						       
+		     						        <input value={tax}
+		     						               onChange={this.handleTaxChange} />
+		     					      </fieldset></div>
+		     		      	<div className="two columns">{medicareLevy}</div>
+		     		      </div></div>
+		      );
   			}
 		}
 
